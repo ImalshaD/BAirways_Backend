@@ -46,6 +46,12 @@ function validator(){
     let toSelector = to_selector.options[to_selector.selectedIndex].getAttribute("data-iatacode");
     let date=dataPicker.value;
     let date_object = new Date(date);
+    let month = date_object.getMonth()+1;
+    if (month<10){
+        month='0'+month;
+    }
+    let date_string = `${date_object.getFullYear()}-${month}-${date_object.getDate()}`;
+    console.log(date_string);
     let today = new Date();
     if (fromSelector==toSelector){
         alert("Select to different Airports");
@@ -54,9 +60,15 @@ function validator(){
     }else{
         try{
             $.ajax({
-                    method: "GET",
+                    method: "POST",
+                    contentType: "application/json",
                     url: "trip/tripList",
                     async: true,
+                    data: JSON.stringify({
+                        "from_iata":fromSelector,
+                        "to_iata": toSelector,
+                        "date": date_string
+                    }),
                     success: function (data) {
                         if (data.code = "SUCCESS") {
                             console.log("SUCESS");
@@ -65,16 +77,16 @@ function validator(){
                             for (let trip of data.context) {
                                 i+=1;
                                 let trip_id = trip.trip_id;
-                                let date = trip.scheduled_date
+                                let date = trip.scheduled_date;
                                 let departure = trip.departure;
                                 let arrival = trip.arrival;
                                 let row = `
                                     <tr>
-                                        <th scope="row">{i}</th>
-                                            <td>{trip_id}</td>
-                                            <td>{date}</td>
-                                            <td>{departure}</td>
-                                            <td>{arrival}</td>
+                                        <th scope="row">${i}</th>
+                                            <td>${trip_id}</td>
+                                            <td>${date}</td>
+                                            <td>${departure}</td>
+                                            <td>${arrival}</td>
                                             <td><button type="button" class="btn btn-dark">Book</button></td>
                                     </tr>
                                 `;
