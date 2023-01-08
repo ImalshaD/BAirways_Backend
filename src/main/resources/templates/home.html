@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <title>B-Airways</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../static/css/home/styles.css" rel="stylesheet" type="text/css" th:href="@{css/home/styles.css}">
+      <link href="../static/css/home/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{css/home/bootstrap.css}">
+      <link rel="stylesheet" href="../static/css/home/bootstrap-datepicker.css" type="text/css" th:href="@{css/home/bootstrap-datepicker.css}">
+      <link rel="stylesheet" href="../static/css/home/font-awesome.css" type="text/css" th:href="@{css/home/font-awesome.css}">
+      <script src="../static/js/home/jquery.js" type="text/javascript" th:src="@{js/home/jquery.js}"></script>
+      <script src="../static/js/home/bootstrap.bundle.js" type="text/javascript" th:src="@{js/home/bootstrap.bundle.js}"></script>
+      <script src="../static/js/home/bootstrap.js" type="text/javascript" th:src="@{js/home/bootstrap.js}"></script>
+      <script src="../static/js/home/bootstrap-datepicker.js" type="text/javascript" th:src="@{js/home/bootstrap-datepicker.js}"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                  </li>
+                </ul>
+                <form class="d-flex">
+                  <button class="btn btn-outline-success" type="submit">Login</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+        <h1>Welcome to B-Airways</h1>
+        <h2>Safe secure flying</h2>
+        <div class="p-3 mb-2 bg-secondary text-white container">
+            <div class="row">
+              <div class="col-sm-2" id="selectionPanel">
+                <select class="form-select" aria-label="Default select" id="fromAirport">
+                  <option disabled selected>From</option>
+                  <option value="1">Sri Lanka</option>
+                  <option value="2">India</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select" id="toAirport">
+                  <option disabled selected>To</option>
+                  <option value="1" data-iatacode = "reqqqq">Sri Lanka</option>
+                  <option value="2" data-iatacode = "india">India</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <form>
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control" placeholder="Departure Date" id="departureDate">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white c-block">
+                                <img src="../static/images/cliparts/download1.png" th:src="@{images/cliparts/download1.png}" alt="Calender" height="25">
+                            </span>
+                        </span>
+                    </div>
+                </form>
+              </div>
+              <div class="col-sm-2">
+                <button type="button" class="btn btn-dark" th:onclick="validator()">Search</button>
+              </div>
+            </div>
+            
+            
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Flight ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Departure</th>
+                    <th scope="col">Arrival</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="flightTable">
+                <tr>
+                    <th scope="row">1</th>
+                    <td>2012/01/01</td>
+                    <td>5.30AM</td>
+                    <td>7.00PM</td>
+                    <td><button type="button" class="btn btn-dark">Book</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript">
+          $(function() {
+              $('#datepicker').datepicker();
+          });
+        </script>
+    </body>
+    <script src="../static/js/home/home.js" type="text/javascript" th:src="@{js/home/home.js}"></script>
+</html>
