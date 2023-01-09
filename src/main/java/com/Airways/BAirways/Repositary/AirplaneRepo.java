@@ -20,7 +20,7 @@ public class AirplaneRepo extends Repo<AirplaneDTO>{
 
     public AirplaneDTO getByPlaneId(int planeId){
         if (existsByPlaneId(planeId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Airplane.planeid(), Operators.EQUAL,planeId);
             AirplaneDTO airplaneDTO = new AirplaneDTO();
             List<Map<String,Object>> mapList = get();

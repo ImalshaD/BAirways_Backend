@@ -22,7 +22,7 @@ public class AirportRepo extends Repo<AirportDTO>{
 
     public AirportDTO getByIataCode(String iataCode){
         if (existsByIataCode(iataCode)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Airport.iatacode(),Operators.EQUAL,iataCode);
             AirportDTO airportDTO = new AirportDTO();
             List<Map<String,Object>> mapList = get();

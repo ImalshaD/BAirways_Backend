@@ -20,7 +20,7 @@ public class Reference_logRepo extends Repo<Reference_logDTO> {
 
     public Reference_logDTO getByReferenceNum(String referenceNum){
         if (existsByReferenceNum(referenceNum)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Reference_log.referencenum(),Operators.EQUAL,referenceNum);
             Reference_logDTO reference_logDTO = new Reference_logDTO();
             List<Map<String,Object>> mapList = get();

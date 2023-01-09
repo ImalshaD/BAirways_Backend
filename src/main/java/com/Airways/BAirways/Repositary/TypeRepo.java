@@ -20,7 +20,7 @@ public class TypeRepo extends Repo<TypeDTO> {
 
     public TypeDTO getByTypeId(int typeId){
         if (existsByTypeId(typeId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Type.typeid(),Operators.EQUAL,typeId);
             TypeDTO typeDTO = new TypeDTO();
             List<Map<String,Object>> mapList = get();

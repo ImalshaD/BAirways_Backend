@@ -46,6 +46,7 @@ public class RegisteredUserController {
         RegisteredUserRepo registeredUserRepo = new RegisteredUserRepo();
         String encoded_password = passwordEncoder.encode(registeredUserDTO.getPassword());
         registeredUserDTO.setPassword(encoded_password);
+        registeredUserDTO.setType_id(5);
         registeredUserRepo.insertRecord(registeredUserDTO);
         ResponseDTO responseDTO = new ResponseDTO(QueryStatus.SUCCESS.toString(),"Working",registeredUserDTO);
         ModelAndView modelAndView = new ModelAndView();

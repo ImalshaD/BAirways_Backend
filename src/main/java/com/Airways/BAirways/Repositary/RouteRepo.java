@@ -20,7 +20,7 @@ public class RouteRepo extends Repo<RouteDTO> {
 
     public RouteDTO getByRouteId(int routeId){
         if (existsByRouteId(routeId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Route.routeid(),Operators.EQUAL,routeId);
             RouteDTO routeDTO = new RouteDTO();
             List<Map<String,Object>> mapList = get();

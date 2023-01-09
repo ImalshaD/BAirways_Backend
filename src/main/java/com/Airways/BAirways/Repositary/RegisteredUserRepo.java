@@ -19,7 +19,7 @@ public class RegisteredUserRepo extends Repo<RegisteredUserDTO> {
     }
 
     public boolean existsByUserId(int userId){
-        prepare();
+        prepareGet();
         selectQuery.firstCondition(RegisteredUser.id(), Operators.EQUAL,userId);
         return exists();
     }

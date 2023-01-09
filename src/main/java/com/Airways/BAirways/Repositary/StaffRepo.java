@@ -20,7 +20,7 @@ public class StaffRepo extends Repo<StaffDTO> {
 
     public StaffDTO getByStaffId(int staffId){
         if (existsByStaffId(staffId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Staff.staffid(),Operators.EQUAL,staffId);
             StaffDTO staffDTO = new StaffDTO();
             List<Map<String,Object>> mapList = get();

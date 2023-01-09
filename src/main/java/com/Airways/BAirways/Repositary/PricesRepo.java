@@ -22,7 +22,7 @@ public class PricesRepo extends Repo<PricesDTO> {
 
     public PricesDTO getByRouteIdClassId(int routeId,int classId){
         if (existsByRouteAndClass(routeId,classId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Prices.routeid(),Operators.EQUAL,routeId);
             selectQuery.joinCondition(JoinOperators.AND,Prices.classid(),Operators.EQUAL,classId);
             PricesDTO pricesDTO = new PricesDTO();

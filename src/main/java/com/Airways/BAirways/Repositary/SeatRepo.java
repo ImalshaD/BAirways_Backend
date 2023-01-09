@@ -21,7 +21,7 @@ public class SeatRepo extends Repo<SeatDTO> {
 
     public SeatDTO getBySeatId(int seatId){
         if (existsBySeatId(seatId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Seat.seatid(),Operators.EQUAL,seatId);
             SeatDTO seatDTO = new SeatDTO();
             List<Map<String,Object>> mapList = get();

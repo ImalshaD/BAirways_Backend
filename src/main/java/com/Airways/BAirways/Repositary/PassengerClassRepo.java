@@ -22,7 +22,7 @@ public class PassengerClassRepo extends Repo<PassengerClassDTO> {
 
     public PassengerClassDTO getByClassId(int classId){
         if (existsByClassId(classId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(PassengerClass.classid(),Operators.EQUAL,classId);
             PassengerClassDTO passengerclassDTO = new PassengerClassDTO();
             List<Map<String,Object>> mapList = get();

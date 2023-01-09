@@ -1,6 +1,9 @@
 let from_selector = document.getElementById("fromAirport");
 let to_selector = document.getElementById("toAirport");
 let dataPicker = document.getElementById("departureDate");
+function selectFlight(fligh_id){
+    console.log(fligh_id);
+}
 function renderAirportLists(){
     try {
         $.ajax({
@@ -87,7 +90,7 @@ function validator(){
                                             <td>${date}</td>
                                             <td>${departure}</td>
                                             <td>${arrival}</td>
-                                            <td><button type="button" class="btn btn-dark">Book</button></td>
+                                            <td><button type="button" class="btn btn-dark" onclick="selectFlight(${trip_id})">Book</button></td>
                                     </tr>
                                 `;
                                 $("#flightTable").append(row);

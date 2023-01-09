@@ -20,7 +20,7 @@ public class TripRepo extends Repo<TripDTO> {
 
     public TripDTO getByTripId(int tripId){
         if (existsByTripId(tripId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Trip.tripid(),Operators.EQUAL,tripId);
             TripDTO tripDTO = new TripDTO();
             List<Map<String,Object>> mapList = get();

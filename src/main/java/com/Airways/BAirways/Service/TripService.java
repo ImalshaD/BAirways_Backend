@@ -4,6 +4,7 @@ import com.Airways.BAirways.DTO.DTOMapper;
 import com.Airways.BAirways.DTO.TripDTO;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Trip;
+import com.Airways.BAirways.Repositary.TripRepo;
 import com.Airways.BAirways.Utility.Exeptions.DuplicateExeption;
 import com.Airways.BAirways.Utility.Exeptions.NotExistenceExeption;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
@@ -25,6 +26,7 @@ public class TripService {
     private Template template = new Template();
     private JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
     private AbstractLogger logger = LoggerBuilder.getLogger();
+    private TripRepo repo = new TripRepo();
     private RouteService routeService = new RouteService();
     public List<TripDTO> serachByDestination(String fromIata, String toIata, LocalDate date) throws DuplicateExeption, NotExistenceExeption {
         int routeid=routeService.serchRoute(fromIata,toIata);
@@ -56,5 +58,9 @@ public class TripService {
             }
         }
         return returList;
+    }
+
+    public TripDTO getByTripID(int tripId){
+        return repo.getByTripId(tripId);
     }
 }

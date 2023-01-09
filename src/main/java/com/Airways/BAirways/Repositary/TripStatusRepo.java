@@ -17,7 +17,7 @@ public class TripStatusRepo extends Repo<TripStatusDTO>{
 
     public TripStatusDTO getByTripstatusId(int tripstatusId){
         if (existsByTripstatusId(tripstatusId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(TripStatus.tripstatusid(),Operators.EQUAL,tripstatusId);
             TripStatusDTO tripstatusDTO = new TripStatusDTO();
             List<Map<String,Object>> mapList = get();

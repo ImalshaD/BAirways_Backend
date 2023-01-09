@@ -21,7 +21,7 @@ public class BookingRepo extends Repo<BookingDTO> {
 
     public BookingDTO getByBookingId(int bookingId){
         if (existsByBookingId(bookingId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Booking.bookingid(),Operators.EQUAL,bookingId);
             BookingDTO bookingDTO = new BookingDTO();
             List<Map<String,Object>> mapList = get();

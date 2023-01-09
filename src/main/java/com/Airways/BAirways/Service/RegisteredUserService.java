@@ -3,12 +3,14 @@ package com.Airways.BAirways.Service;
 import com.Airways.BAirways.DTO.RegisteredUserDTO;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.RegisteredUser;
+import com.Airways.BAirways.Repositary.RegisteredUserRepo;
 import com.Airways.BAirways.Utility.QueryStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegisteredUserService {
+    private RegisteredUserRepo registeredUserRepo = new RegisteredUserRepo();
     public QueryStatus saveUser(RegisteredUserDTO registeredUserDTO){
         Template template = new Template();
         JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
@@ -32,5 +34,8 @@ public class RegisteredUserService {
                 return QueryStatus.FAILED;
             }
         }
+    }
+    public RegisteredUserDTO getUserByuserName(String userName){
+        return registeredUserRepo.getByUserName(userName);
     }
 }

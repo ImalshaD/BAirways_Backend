@@ -5,6 +5,7 @@ import com.Airways.BAirways.DTO.RegisteredUserDTO;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateForeignKeyIfNotExists;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateIndexIfNotExists;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateTriggerIfNotExists;
+import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Initializer;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Airplane;
@@ -248,5 +249,12 @@ public class TestController {
             field.set(dto, entry.getValue());
         }
         return dto;
+    }
+    @GetMapping(path = "/insertTest")
+    public void test(){
+        NewBooking newBooking = new NewBooking();
+        newBooking.setparams(2, 3, 1, 7, "1111-1111-1111-1111", "ashalman");
+        int y = newBooking.call();
+        System.out.println(y);
     }
 }

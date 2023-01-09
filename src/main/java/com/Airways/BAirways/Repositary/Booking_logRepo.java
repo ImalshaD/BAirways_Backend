@@ -20,7 +20,7 @@ public class Booking_logRepo extends Repo<Booking_logDTO> {
 
     public Booking_logDTO getByLogNum(int logNum){
         if (existsByLogNum(logNum)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Booking_log.lognum(),Operators.EQUAL,logNum);
             Booking_logDTO booking_logDTO = new Booking_logDTO();
             List<Map<String,Object>> mapList = get();

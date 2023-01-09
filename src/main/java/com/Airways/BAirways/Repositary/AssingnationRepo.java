@@ -21,7 +21,7 @@ public class AssingnationRepo extends Repo<AssingnationDTO>{
 
     public AssingnationDTO getByAssingnationId(int assingnationId){
         if (existsByAssingnationId(assingnationId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Assingnation.assingnationid(),Operators.EQUAL,assingnationId);
             AssingnationDTO assingnationDTO = new AssingnationDTO();
             List<Map<String,Object>> mapList = get();

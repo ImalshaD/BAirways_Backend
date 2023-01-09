@@ -20,8 +20,24 @@ public class PassengerRepo extends Repo<PassengerDTO> {
 
     public PassengerDTO getByPassengerId(int passengerId){
         if (existsByPassengerId(passengerId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Passenger.passengerid(),Operators.EQUAL,passengerId);
+            PassengerDTO passengerDTO = new PassengerDTO();
+            List<Map<String,Object>> mapList = get();
+            Map<String,Object> map = mapList.get(0);
+            DTOMapper<PassengerDTO> mapper = new DTOMapper<>();
+            try {
+                return mapper.maptoDTO(passengerDTO, map);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    public PassengerDTO getByPassportID(String passPort){
+        if (existsByPassPortNumber(passPort)){
+            prepareGet();
+            selectQuery.firstCondition(Passenger.passportnumber(),Operators.EQUAL,passPort);
             PassengerDTO passengerDTO = new PassengerDTO();
             List<Map<String,Object>> mapList = get();
             Map<String,Object> map = mapList.get(0);
@@ -39,6 +55,11 @@ public class PassengerRepo extends Repo<PassengerDTO> {
     public boolean existsByPassengerId(int passengerId){
         prepare();
         selectQuery.firstCondition(Passenger.passengerid(), Operators.EQUAL,passengerId);
+        return exists();
+    }
+    public boolean existsByPassPortNumber(String passportNumber){
+        prepare();
+        selectQuery.firstCondition(Passenger.passportnumber(), Operators.EQUAL,passportNumber);
         return exists();
     }
     @Override

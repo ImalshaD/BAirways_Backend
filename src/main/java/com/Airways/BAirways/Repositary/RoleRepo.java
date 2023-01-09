@@ -19,7 +19,7 @@ public class RoleRepo extends Repo<RoleDTO> {
 
     public RoleDTO getByRoleId(int roleId){
         if (existsByRoleId(roleId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Role.roleid(),Operators.EQUAL,roleId);
             RoleDTO roleDTO = new RoleDTO();
             List<Map<String,Object>> mapList = get();

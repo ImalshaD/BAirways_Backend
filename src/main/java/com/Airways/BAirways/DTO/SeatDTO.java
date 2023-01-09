@@ -16,4 +16,6 @@ public class SeatDTO {
     private int col_id;
 
     private int row_id;
+
+    private boolean availability;
 }

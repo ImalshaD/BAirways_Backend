@@ -20,7 +20,7 @@ public class StatusRepo extends Repo<StatusDTO> {
 
     public StatusDTO getByStatusId(int statusId){
         if (existsByStatusId(statusId)){
-            prepare();
+            prepareGet();
             selectQuery.firstCondition(Status.statusid(),Operators.EQUAL,statusId);
             StatusDTO statusDTO = new StatusDTO();
             List<Map<String,Object>> mapList = get();

@@ -18,7 +18,7 @@ public class Passenger {
     private int passenger_id;
     @MyColoumn
     private String passport_number;
-    @MyColoumn
+    @MyColoumn(unique = true)
     private String nationality;
     @MyColoumn
     private String first_name;
