@@ -25,4 +25,5 @@ public class PassengerDTO {
     private String contact_number;
 
     private LocalDate b_day;
+    private int seat_id;
 }

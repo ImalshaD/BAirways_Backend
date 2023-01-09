@@ -1,9 +1,11 @@
 package com.Airways.BAirways.Service;
 
+import com.Airways.BAirways.DTO.BookingDTO;
 import com.Airways.BAirways.DTO.PassengerDTO;
 import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Booking;
+import com.Airways.BAirways.Repositary.BookingRepo;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
 import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.JoinOperators;
@@ -23,6 +25,7 @@ public class BookingService {
     private static JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
     private PassengerService passengerService = new PassengerService();
     private AbstractLogger logger = LoggerBuilder.getLogger();
+    private BookingRepo bookingRepo = new BookingRepo();
     public boolean checkSeatAvailability(int seat_id,int trip_id){
         SelectQueryPreparedStatementGenerator selectQuery = new SelectQueryPreparedStatementGenerator();
         selectQuery.setFields(Booking.passengerid());
@@ -57,5 +60,8 @@ public class BookingService {
         String key = "key"+user_id;
         newBooking.setparams(seat_id,trip_id,passengerId,user_id,refNum,key);
         return newBooking.call();
+    }
+    public BookingDTO getByID(int bookingID){
+        return bookingRepo.getByBookingId(bookingID);
     }
 }

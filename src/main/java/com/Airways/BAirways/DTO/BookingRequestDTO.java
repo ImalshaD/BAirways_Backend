@@ -11,6 +11,5 @@ import java.util.List;
 @Data
 public class BookingRequestDTO {
     private int trip_id;
-    private int seat_id;
     private List<PassengerDTO> list;
 }
