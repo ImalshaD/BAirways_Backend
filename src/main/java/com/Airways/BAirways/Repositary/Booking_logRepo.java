@@ -3,6 +3,7 @@ package com.Airways.BAirways.Repositary;
 
 import com.Airways.BAirways.DTO.Booking_logDTO;
 import com.Airways.BAirways.DTO.DTOMapper;
+import com.Airways.BAirways.Entity.Booking;
 import com.Airways.BAirways.Entity.Booking_log;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.Operators;
 
@@ -54,6 +55,7 @@ public class Booking_logRepo extends Repo<Booking_logDTO> {
 
         insertQuery.addValue(Booking_log.userid(),dto.getUser_id());
         insertQuery.addValue(Booking_log.bookingid(),dto.getBooking_id());
+        insertQuery.addValue(Booking_log.statusid(),dto.getStatus_id());
         return insert();
 
     }
@@ -73,6 +75,11 @@ public class Booking_logRepo extends Repo<Booking_logDTO> {
         if (dtoOld.getBooking_id()!=0 && dtoNew.getBooking_id()!=0){
             if (dtoOld.getBooking_id()!=dtoNew.getBooking_id()){
                 updateQuery.setField(Booking_log.bookingid(),dtoNew.getBooking_id());
+            }
+        }
+        if (dtoOld.getStatus_id()!=0 && dtoNew.getStatus_id()!=0){
+            if (dtoOld.getStatus_id()!=dtoNew.getStatus_id()){
+                updateQuery.setField(Booking_log.statusid(),dtoNew.getStatus_id());
             }
         }
 

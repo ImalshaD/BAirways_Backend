@@ -60,7 +60,7 @@ public class Trip {
                             LEAVE seat_loop;
                         END IF;
                                 
-                        INSERT INTO booking (trip_id,passenger_id,seat_id,class_id,cost,status_id) VALUES (new.trip_id,null,seatID,classID,price_var,1);
+                        INSERT INTO booking (trip_id,passenger_id,seat_id,class_id,cost) VALUES (new.trip_id,null,seatID,classID,price_var);
                     END LOOP;
                                 
                     CLOSE seatCursor;

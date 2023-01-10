@@ -1,7 +1,9 @@
 package com.Airways.BAirways.Service;
 
 import com.Airways.BAirways.DTO.BookingDTO;
+import com.Airways.BAirways.DTO.Booking_logDTO;
 import com.Airways.BAirways.DTO.PassengerDTO;
+import com.Airways.BAirways.DTO.RegisteredUserDTO;
 import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Booking;
@@ -12,8 +14,11 @@ import com.Airways.BAirways.Utility.QueryHelper.Operators.JoinOperators;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.Operators;
 import com.Airways.BAirways.Utility.QueryHelper.PreparedStatement.SelectQueryPreparedStatementGenerator;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +30,8 @@ public class BookingService {
     private static JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
     private PassengerService passengerService = new PassengerService();
     private AbstractLogger logger = LoggerBuilder.getLogger();
+    private RegisteredUserService registeredUserService = new RegisteredUserService();
+    private Booking_LogService booking_logService = new Booking_LogService();
     private BookingRepo bookingRepo = new BookingRepo();
     public boolean checkSeatAvailability(int seat_id,int trip_id){
         SelectQueryPreparedStatementGenerator selectQuery = new SelectQueryPreparedStatementGenerator();
@@ -61,7 +68,27 @@ public class BookingService {
         newBooking.setparams(seat_id,trip_id,passengerId,user_id,refNum,key);
         return newBooking.call();
     }
+    public Map<Object,Object> newBooking(List<PassengerDTO> listdto ,int tripId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        RegisteredUserDTO dto = registeredUserService.getUserByuserName(username);
+        Map<Object,Object> mapobj = new HashMap<>();
+        for (PassengerDTO passengerDTO : listdto){
+            int temp=makeBooking(dto.getUser_id(),passengerDTO, tripId, passengerDTO.getSeat_id());
+            mapobj.put(passengerDTO.getSeat_id(),temp);
+        }
+        return mapobj;
+    }
     public BookingDTO getByID(int bookingID){
         return bookingRepo.getByBookingId(bookingID);
+    }
+    public List<BookingDTO> getBookingforCurrentUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        RegisteredUserDTO currentUser = registeredUserService.getUserByuserName(username);
+        List<Booking_logDTO> bookingLogs = booking_logService.getByUser(currentUser.getUser_id());
+        List<BookingDTO> returnList = new ArrayList<>();
+        for (Booking_logDTO dto : bookingLogs){
+            returnList.add(getByID(dto.getBooking_id()));
+        }
+        return returnList;
     }
 }

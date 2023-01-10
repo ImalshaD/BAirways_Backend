@@ -17,7 +17,8 @@ public class Booking_log {
     private int user_id;
     @MyColoumn @MyForiegnKey(table= Booking.class, coloumn = Booking.BOOKINGID)
     private int booking_id;
-
+    @MyColoumn @MyForiegnKey(table= Status.class,coloumn = Status.STATUSID)
+    private int status_id;
     @MyTrigger
     public static Trigger discount_trigger(){
         String triggerName="discount_trigger";
@@ -45,6 +46,10 @@ public class Booking_log {
     protected static final String USERID="user_id";
     protected static final String BOOKINGID="booking_id";
     protected static final String tableName="Booking_log";
+    protected static final String STATUSID="status_id";
+    public static String statusid(){
+        return STATUSID;
+    }
 
     public static String lognum(){
         return LOGNUM;

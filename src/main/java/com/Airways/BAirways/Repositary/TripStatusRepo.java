@@ -31,11 +31,31 @@ public class TripStatusRepo extends Repo<TripStatusDTO>{
         }
         return null;
     }
-
+    public TripStatusDTO getByTripstatusName(String tripstatusName){
+        if (existsByTripstatusName(tripstatusName)){
+            prepareGet();
+            selectQuery.firstCondition(TripStatus.statusname(),Operators.EQUAL,tripstatusName);
+            TripStatusDTO tripstatusDTO = new TripStatusDTO();
+            List<Map<String,Object>> mapList = get();
+            Map<String,Object> map = mapList.get(0);
+            DTOMapper<TripStatusDTO> mapper = new DTOMapper<>();
+            try {
+                return mapper.maptoDTO(tripstatusDTO, map);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
     public boolean existsByTripstatusId(int tripstatusId){
         prepare();
         selectQuery.firstCondition(TripStatus.tripstatusid(), Operators.EQUAL,tripstatusId);
+        return exists();
+    }
+    public boolean existsByTripstatusName(String tripstatusname){
+        prepare();
+        selectQuery.firstCondition(TripStatus.statusname(), Operators.EQUAL,tripstatusname);
         return exists();
     }
     @Override

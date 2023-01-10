@@ -1,7 +1,6 @@
 package com.Airways.BAirways.Controller;
 
-import com.Airways.BAirways.DTO.AirplaneDTO;
-import com.Airways.BAirways.DTO.RegisteredUserDTO;
+import com.Airways.BAirways.DTO.*;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateForeignKeyIfNotExists;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateIndexIfNotExists;
 import com.Airways.BAirways.Database.DataBaseFunctions.CreateTriggerIfNotExists;
@@ -9,7 +8,11 @@ import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Initializer;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Airplane;
+import com.Airways.BAirways.Entity.Status;
 import com.Airways.BAirways.Repositary.RegisteredUserRepo;
+import com.Airways.BAirways.Repositary.StatusRepo;
+import com.Airways.BAirways.Repositary.TripStatusRepo;
+import com.Airways.BAirways.Repositary.TypeRepo;
 import com.Airways.BAirways.Utility.Exeptions.DataTypeExeption;
 import com.Airways.BAirways.Utility.QueryHelper.DataTypes.INT;
 import com.Airways.BAirways.Utility.QueryHelper.DataTypes.VARCHAR;
@@ -173,7 +176,7 @@ public class TestController {
         return createIndexIfNotExists.call();
     }
     @GetMapping(path="/createDB")
-    public int func3() throws DataTypeExeption, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public int createDB() throws DataTypeExeption, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Template template = new Template();
         JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
         Initializer.build();
@@ -209,26 +212,47 @@ public class TestController {
         }
         RegisteredUserRepo registeredUserRepo = new RegisteredUserRepo();
         RegisteredUserDTO registeredUserDTO  = new RegisteredUserDTO();
+        TripStatusRepo tripStatusRepo = new TripStatusRepo();
+        StatusRepo statusRepo = new StatusRepo();
         PasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!(registeredUserRepo.existsByUserName("IDP"))) {
-            registeredUserDTO.setUser_name("IDP");
+        TypeRepo typeRepo = new TypeRepo();
+        String usertypes[] = {"ADMIN","REGULAR","FREQUENT","GOLD","GUEST"};
+        double discounts[] = {0.0,0.0,9.0,15.0,0.0};
+        String tripstatus[] = {"SCHEDULED","DEPARTURED","LANDED"};
+        String status[] = {"PENDING","PAID","CANCELLED"};
+        ArrayList<Integer> userids = new ArrayList<>();
+        for (int i=0;i<usertypes.length;i++) {
+            String type = usertypes[i];
+            double discount = discounts[i];
+            if (typeRepo.existsByTypeName(type)) {
+                userids.add(typeRepo.getByTypeName(type).getType_id());
+            } else {
+                TypeDTO typeDTO = new TypeDTO();
+                typeDTO.setName(type);
+                typeDTO.setDiscount(discount);
+                typeRepo.insertRecord(typeDTO);
+                userids.add(typeRepo.getByTypeName(type).getType_id());
+            }
+        }
+        for (String trip_status :tripstatus){
+            if (!(tripStatusRepo.existsByTripstatusName(trip_status))) {
+                TripStatusDTO tripStatusDTO = new TripStatusDTO();
+                tripStatusDTO.setStatus_name(trip_status);
+                tripStatusRepo.insertRecord(tripStatusDTO);
+            }
+        }
+        for (String status_s :status){
+            if (!(statusRepo.existsByStatusName(status_s))) {
+                StatusDTO statusDTO = new StatusDTO();
+                statusDTO.setName(status_s);
+                statusRepo.insertRecord(statusDTO);
+            }
+        }
+        if (!(registeredUserRepo.existsByUserName("ADMIN"))) {
+            registeredUserDTO.setUser_name("ADMIN");
             registeredUserDTO.setPassword(encoder.encode("1234"));
             System.out.println(encoder.encode("1234"));
-            registeredUserDTO.setType_id(1);
-            registeredUserRepo.insertRecord(registeredUserDTO);
-        }
-        if (!(registeredUserRepo.existsByUserName("Ashalman"))) {
-            registeredUserDTO.setUser_name("Ashalman");
-            registeredUserDTO.setPassword(encoder.encode("ashalman1234#1234#"));
-            System.out.println(encoder.encode("ashalman1234#1234#"));
-            registeredUserDTO.setType_id(1);
-            registeredUserRepo.insertRecord(registeredUserDTO);
-        }
-        if (!(registeredUserRepo.existsByUserName("Great"))) {
-            registeredUserDTO.setUser_name("Great");
-            registeredUserDTO.setPassword("{noop}1234");
-            System.out.println(encoder.encode("ashalman1234#1234#"));
-            registeredUserDTO.setType_id(1);
+            registeredUserDTO.setType_id(userids.get(0).intValue());
             registeredUserRepo.insertRecord(registeredUserDTO);
         }
         return 1;

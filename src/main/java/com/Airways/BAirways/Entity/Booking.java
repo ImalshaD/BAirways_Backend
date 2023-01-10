@@ -25,8 +25,7 @@ public class Booking {
     private int class_id;
     @MyColoumn
     private double cost;
-    @MyColoumn @MyForiegnKey(table= Status.class,coloumn = Status.STATUSID)
-    private int status_id;
+
 
     protected static final String BOOKINGID="booking_id";
     protected static final String TRIPID="trip_id";
@@ -34,7 +33,7 @@ public class Booking {
     protected static final String SEATID="seat_id";
     protected static final String CLASSID="class_id";
     protected static final String COST="cost";
-    protected static final String STATUSID="status_id";
+
     protected static final String tableName ="Booking";
 
     public static String bookingid(){
@@ -65,12 +64,6 @@ public class Booking {
     public static String cost(){
         return COST;
     }
-
-
-    public static String statusid(){
-        return STATUSID;
-    }
-
 
     public static String tablename(){
         return tableName;

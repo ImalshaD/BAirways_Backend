@@ -34,12 +34,32 @@ public class TypeRepo extends Repo<TypeDTO> {
         }
         return null;
     }
-
+    public TypeDTO getByTypeName(String name){
+        if (existsByTypeName(name)){
+            prepareGet();
+            selectQuery.firstCondition(Type.name(),Operators.EQUAL,name);
+            TypeDTO typeDTO = new TypeDTO();
+            List<Map<String,Object>> mapList = get();
+            Map<String,Object> map = mapList.get(0);
+            DTOMapper<TypeDTO> mapper = new DTOMapper<>();
+            try {
+                return mapper.maptoDTO(typeDTO, map);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 
     public boolean existsByTypeId(int typeId){
         prepare();
         selectQuery.firstCondition(Type.typeid(), Operators.EQUAL,typeId);
+        return exists();
+    }
+    public boolean existsByTypeName(String name){
+        prepare();
+        selectQuery.firstCondition(Type.name(), Operators.EQUAL,name);
         return exists();
     }
     @Override

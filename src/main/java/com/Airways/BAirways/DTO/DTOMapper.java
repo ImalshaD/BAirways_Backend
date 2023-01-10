@@ -19,6 +19,9 @@ public class DTOMapper<T> {
             }else if(field.getType() == LocalTime.class){
                 java.sql.Time x =(java.sql.Time) entry.getValue();
                 field.set(dto,x.toLocalTime());
+            }else if(field.getType() == double.class){
+                java.math.BigDecimal x =(java.math.BigDecimal) entry.getValue();
+                field.set(dto,x.doubleValue());
             }else {
                 field.set(dto, entry.getValue());
             }

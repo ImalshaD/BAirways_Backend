@@ -59,7 +59,6 @@ public class BookingRepo extends Repo<BookingDTO> {
         insertQuery.addValue(Booking.seatid(),dto.getSeat_id());
         insertQuery.addValue(Booking.classid(),dto.getClass_id());
         insertQuery.addValue(Booking.cost(),dto.getCost());
-        insertQuery.addValue(Booking.statusid(),dto.getStatus_id());
         return insert();
 
     }
@@ -101,14 +100,6 @@ public class BookingRepo extends Repo<BookingDTO> {
                 updateQuery.setField(Booking.cost(),dtoNew.getCost());
             }
         }
-
-
-        if (dtoOld.getStatus_id()!=0 && dtoNew.getStatus_id()!=0){
-            if (dtoOld.getStatus_id()!=dtoNew.getStatus_id()){
-                updateQuery.setField(Booking.statusid(),dtoNew.getStatus_id());
-            }
-        }
-
         updateQuery.firstCondition(Booking.bookingid(),Operators.EQUAL,dtoOld.getBooking_id());
         return update();
 

@@ -10,7 +10,7 @@ public class TripStatus {
     @MyColoumn
     @MyPrimaryKey(autoIncrement = true)
     private int tripstatus_id;
-    @MyColoumn
+    @MyColoumn(unique = true)
     private String status_name;
 
     protected static final String TRIPSTATUSID="tripstatus_id";

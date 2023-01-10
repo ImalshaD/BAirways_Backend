@@ -11,7 +11,7 @@ public class BAirwaysApplication {
 		SpringApplication.run(BAirwaysApplication.class, args);
 		TestController testController = new TestController();
 		try {
-			testController.func3();
+			testController.createDB();
 		}catch (Exception e){
 			e.printStackTrace();
 		}

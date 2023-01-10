@@ -52,8 +52,12 @@ public class AirplaneRepo extends Repo<AirplaneDTO>{
         insertQuery.addValue(Airplane.manufacturedyear(),dto.getManufactured_year());
         insertQuery.addValue(Airplane.manufacturedcountry(),dto.getManufactured_country());
         insertQuery.addValue(Airplane.seatingcapacity(),dto.getSeating_capacity());
-        insertQuery.addValue(Airplane.seatcols(),dto.getSeat_cols());
-        insertQuery.addValue(Airplane.seatrows(),dto.getSeat_rows());
+        insertQuery.addValue(Airplane.getseatcolsfirstclass(),dto.getSeat_cols_firstclass());
+        insertQuery.addValue(Airplane.getseatrowsfirstclass(),dto.getSeat_rows_firstclass());
+        insertQuery.addValue(Airplane.getSeatcolsbusinessclass(),dto.getSeat_cols_businessclass());
+        insertQuery.addValue(Airplane.getSeatrowsbusinessclass(),dto.getSeat_rows_businessclass());
+        insertQuery.addValue(Airplane.getseatcolsfirstclass(),dto.getSeat_cols_firstclass());
+        insertQuery.addValue(Airplane.getseatrowsfirstclass(),dto.getSeat_rows_firstclass());
         return insert();
     }
 
@@ -86,14 +90,34 @@ public class AirplaneRepo extends Repo<AirplaneDTO>{
                 updateQuery.setField(Airplane.seatingcapacity(),dtoNew.getSeating_capacity());
             }
         }
-        if (dtoOld.getSeat_cols()!=0 && dtoNew.getSeat_cols()!=0){
-            if (dtoOld.getSeat_cols()!=dtoNew.getSeat_cols()){
-                updateQuery.setField(Airplane.seatcols(),dtoNew.getSeat_cols());
+        if (dtoOld.getSeat_cols_firstclass()!=0 && dtoNew.getSeat_cols_firstclass()!=0){
+            if (dtoOld.getSeat_cols_firstclass()!=dtoNew.getSeat_cols_firstclass()){
+                updateQuery.setField(Airplane.getseatcolsfirstclass(),dtoNew.getSeat_cols_firstclass());
             }
         }
-        if (dtoOld.getSeat_rows()!=0 && dtoNew.getSeat_rows()!=0){
-            if (dtoOld.getSeat_rows()!=dtoNew.getSeat_rows()){
-                updateQuery.setField(Airplane.seatrows(),dtoNew.getSeat_rows());
+        if (dtoOld.getSeat_rows_firstclass()!=0 && dtoNew.getSeat_rows_firstclass()!=0){
+            if (dtoOld.getSeat_rows_firstclass()!=dtoNew.getSeat_rows_firstclass()){
+                updateQuery.setField(Airplane.getseatrowsfirstclass(),dtoNew.getSeat_rows_firstclass());
+            }
+        }
+        if (dtoOld.getSeat_cols_businessclass()!=0 && dtoNew.getSeat_cols_businessclass()!=0){
+            if (dtoOld.getSeat_cols_businessclass()!=dtoNew.getSeat_cols_businessclass()){
+                updateQuery.setField(Airplane.getSeatcolsbusinessclass(),dtoNew.getSeat_cols_businessclass());
+            }
+        }
+        if (dtoOld.getSeat_rows_businessclass()!=0 && dtoNew.getSeat_rows_businessclass()!=0){
+            if (dtoOld.getSeat_rows_businessclass()!=dtoNew.getSeat_rows_businessclass()){
+                updateQuery.setField(Airplane.getSeatrowsbusinessclass(),dtoNew.getSeat_rows_businessclass());
+            }
+        }
+        if (dtoOld.getSeat_cols_economyclass()!=0 && dtoNew.getSeat_cols_economyclass()!=0){
+            if (dtoOld.getSeat_cols_economyclass()!=dtoNew.getSeat_cols_economyclass()){
+                updateQuery.setField(Airplane.getSeatcolseconomyclass(),dtoNew.getSeat_cols_economyclass());
+            }
+        }
+        if (dtoOld.getSeat_rows_economyclass()!=0 && dtoNew.getSeat_rows_economyclass()!=0){
+            if (dtoOld.getSeat_rows_economyclass()!=dtoNew.getSeat_rows_economyclass()){
+                updateQuery.setField(Airplane.getSeatrowseconomyclass(),dtoNew.getSeat_rows_economyclass());
             }
         }
         updateQuery.firstCondition(Airplane.planeid(),Operators.EQUAL,dtoOld.getPlane_id());

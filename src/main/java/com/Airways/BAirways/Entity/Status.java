@@ -15,7 +15,7 @@ public class Status {
     @MyColoumn
     @MyPrimaryKey(autoIncrement = true)
     private int status_id;
-    @MyColoumn
+    @MyColoumn(unique = true)
     private String name;
     protected static final String STATUSID="status_id";
     protected static final String NAME="name";

@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Booking_logDTO {
-        private int log_num;
-
+    private int log_num;
     private int user_id;
-
     private int booking_id;
+    private int status_id;
 }

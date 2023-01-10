@@ -5,7 +5,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 
 public class Database {
-    private static String dBname="testing2";
+    private static String dBname="BAirways";
 
     private static Database instance = null;
 
@@ -24,7 +24,7 @@ public class Database {
     public javax.sql.DataSource getDatasource(){
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/testing2?createDatabaseIfNotExist=true");
+        dataSourceBuilder.url(String.format("jdbc:mysql://localhost:3306/%s?createDatabaseIfNotExist=true",dBname));
         dataSourceBuilder.username("root");
         dataSourceBuilder.password("#Damkith123");
         return dataSourceBuilder.build();

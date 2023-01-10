@@ -34,11 +34,32 @@ public class StatusRepo extends Repo<StatusDTO> {
         }
         return null;
     }
+    public StatusDTO getByStatusId(String statusName){
+        if (existsByStatusName(statusName)){
+            prepareGet();
+            selectQuery.firstCondition(Status.name(),Operators.EQUAL,statusName);
+            StatusDTO statusDTO = new StatusDTO();
+            List<Map<String,Object>> mapList = get();
+            Map<String,Object> map = mapList.get(0);
+            DTOMapper<StatusDTO> mapper = new DTOMapper<>();
+            try {
+                return mapper.maptoDTO(statusDTO, map);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 
     public boolean existsByStatusId(int statusId){
         prepare();
         selectQuery.firstCondition(Status.statusid(), Operators.EQUAL,statusId);
+        return exists();
+    }
+    public boolean existsByStatusName(String statusName){
+        prepare();
+        selectQuery.firstCondition(Status.name(), Operators.EQUAL,statusName);
         return exists();
     }
     @Override
