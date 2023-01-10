@@ -2,7 +2,19 @@ let from_selector = document.getElementById("fromAirport");
 let to_selector = document.getElementById("toAirport");
 let dataPicker = document.getElementById("departureDate");
 function selectFlight(fligh_id){
-    console.log(fligh_id);
+    localStorage.setItem("flightID",fligh_id);
+    window.location.replace("seat/getView")
+    // const xhr = new XMLHttpRequest();
+    // xhr.open("GET", "http://localhost:8080/seat/getView", true);
+    // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // xhr.onload = function() {
+    //     if (xhr.status === 200) {
+    //         console.log("Success!");
+    //     } else {
+    //         console.error("Error: " + xhr.status);
+    //     }
+    // };
+    // xhr.send();
 }
 function renderAirportLists(){
     try {

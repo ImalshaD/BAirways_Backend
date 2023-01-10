@@ -217,6 +217,7 @@ public class TestController {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         TypeRepo typeRepo = new TypeRepo();
         String usertypes[] = {"ADMIN","REGULAR","FREQUENT","GOLD","GUEST"};
+        String passengerClasses[]={"PLATINUM",""};
         double discounts[] = {0.0,0.0,9.0,15.0,0.0};
         String tripstatus[] = {"SCHEDULED","DEPARTURED","LANDED"};
         String status[] = {"PENDING","PAID","CANCELLED"};
