@@ -1,3 +1,5 @@
+
+
 const container = document.querySelector('.container');
 const seats = document.querySelectorAll('.row .seat:not(.occupied)');
 const count = document.getElementById('count');
@@ -5,7 +7,8 @@ const total = document.getElementById('total');
 
 
 var ticketPrice = +50; // get from database
-var flightID = localStorage.getItem("flightID");
+var tripid = localStorage.getItem("trip_id");
+var plane_id = localStorage.getItem("flightID");
 
 
 var businessRows = 10;
@@ -19,7 +22,7 @@ const first = [];
 const business = [];
 const economy = [];
 const seatsDIV=document.getElementById("seats");
-loadByplaneID(flightID);
+loadByplaneID(plane_id);
 loadplanedata();
 seatsDIV.innerHTML = renderSeats();
 console.log(seatsDIV.innerHTML);
@@ -47,7 +50,7 @@ function loadByplaneID(planeID){
 function loadplanedata() {
   $.ajax({
     method: "GET",
-    url: `/seat/tripID/${flightID}`,
+    url: `/seat/tripID/${tripid}`,
     async: false,
     success: function (data) {
       for (let seat of data.context) {
@@ -185,7 +188,8 @@ function updateSelectedCount() {
 }
 
 function proceed(){
-  console.log(updateSelectedCount());
+  localStorage.setItem("seatIDs",updateSelectedCount());
+  window.location.replace("../booking/bookingpage");
 }
 
 

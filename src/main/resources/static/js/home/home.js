@@ -1,8 +1,9 @@
 let from_selector = document.getElementById("fromAirport");
 let to_selector = document.getElementById("toAirport");
 let dataPicker = document.getElementById("departureDate");
-function selectFlight(fligh_id){
+function selectFlight(fligh_id,trip_id){
     localStorage.setItem("flightID",fligh_id);
+    localStorage.setItem("trip_id",trip_id);
     window.location.replace("seat/getView")
     // const xhr = new XMLHttpRequest();
     // xhr.open("GET", "http://localhost:8080/seat/getView", true);
@@ -62,16 +63,20 @@ function validator(){
     let date=dataPicker.value;
     let date_object = new Date(date);
     let month = date_object.getMonth()+1;
+    let date_va = date_object.getDate();
     if (month<10){
         month='0'+month;
     }
-    let date_string = `${date_object.getFullYear()}-${month}-${date_object.getDate()}`;
+    if (date_va<10){
+        date_va='0'+date_va;
+    }
+    let date_string = `${date_object.getFullYear()}-${month}-${date_va}`;
     console.log(date_string);
     let today = new Date();
     if (fromSelector==toSelector){
         alert("Select to different Airports");
     }else if (date_object.getTime()<today.getTime()){
-        alert("Select valid date closest day you are allowed to book is tomorow")
+        alert("Select valid date closest day you are allowed to book is tommorow")
     }else{
         try{
             $.ajax({
@@ -92,6 +97,7 @@ function validator(){
                             for (let trip of data.context) {
                                 i+=1;
                                 let trip_id = trip.trip_id;
+                                let flight_id = trip.plane_id;
                                 let date = trip.scheduled_date;
                                 let departure = trip.departure;
                                 let arrival = trip.arrival;
@@ -102,7 +108,7 @@ function validator(){
                                             <td>${date}</td>
                                             <td>${departure}</td>
                                             <td>${arrival}</td>
-                                            <td><button type="button" class="btn btn-dark" onclick="selectFlight(${trip_id})">Book</button></td>
+                                            <td><button type="button" class="btn btn-dark" onclick="selectFlight(${flight_id},${trip_id})">Book</button></td>
                                     </tr>
                                 `;
                                 $("#flightTable").append(row);

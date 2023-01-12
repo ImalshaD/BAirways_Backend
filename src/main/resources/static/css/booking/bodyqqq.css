@@ -1,0 +1,35 @@
+body {
+  background: url('C:/Users/DELL/Desktop/plane-170272.jpg') no-repeat center center / cover;
+  background-color: bisque;
+}
+#a1{
+    background-color: rgba(193, 199, 227, 0.5);
+  }
+  #strength-indicator {
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  #strength-indicator.Weak {
+    color: red;
+  }
+  
+  #strength-indicator.Medium {
+    color: orange;
+  }
+  
+  #strength-indicator.Strong {
+    color: green;
+  }
+.b1 {
+    transition: all 0.5s ease-in-out;
+}
+
+.b2 {
+    opacity: 1;
+}
+
+.b3 {
+    opacity: 0;
+}

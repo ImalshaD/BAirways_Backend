@@ -275,11 +275,4 @@ public class TestController {
         }
         return dto;
     }
-    @GetMapping(path = "/insertTest")
-    public void test(){
-        NewBooking newBooking = new NewBooking();
-        newBooking.setparams(2, 3, 1, 7, "1111-1111-1111-1111", "ashalman");
-        int y = newBooking.call();
-        System.out.println(y);
-    }
 }

@@ -43,12 +43,9 @@ public class Seat {
                     declare first_j int default 0;
                     declare buisness_j int default 0;
                     declare econ_i int default 0;
-                    set firstClass_cols = NEW.seat_cols_firstclass;
-                    set firstClass_rows = NEW.seat_rows_firstclass;
-                    set buisnessClass_cols = NEW.seat_cols_businessclass;
-                    set buisnessClass_rows = NEW.seat_rows_businessclass;
-                    set econClass_cols = NEW.seat_cols_economyclass;
-                    set econClass_rows = NEW.seat_rows_economyclass;
+                    select seat_cols_firstclass,seat_rows_firstclass,seat_cols_businessclass,seat_rows_businessclass,seat_cols_economyclass,seat_rows_economyclass
+                    INTO firstClass_cols,firstClass_rows,buisnessClass_cols,buisnessClass_rows,econClass_cols,econClass_rows
+                    from airplanemodal where modal_id = new.modal_id;
                     while first_j < firstClass_cols DO
                 		SET first_j = first_j+1;
                         SET first_i = 0;
@@ -84,7 +81,6 @@ public class Seat {
     protected static final String tableName="Seat";
     protected static final String COLID="col_id";
     protected static final String ROWID="row_id";
-
     public static String seatid(){
         return SEATID;
     }

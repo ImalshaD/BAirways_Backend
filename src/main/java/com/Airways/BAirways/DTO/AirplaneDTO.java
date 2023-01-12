@@ -11,14 +11,7 @@ import lombok.NoArgsConstructor;
 public class AirplaneDTO {
 
     private int plane_id;
-    private String modal;
+    private int modal_id;
     private int manufactured_year;
     private String manufactured_country;
-    private int seating_capacity;
-    private int seat_cols_firstclass;
-    private int seat_rows_firstclass;
-    private int seat_rows_economyclass;
-    private int seat_cols_economyclass;
-    private int seat_cols_businessclass;
-    private int seat_rows_businessclass;
 }

@@ -2,6 +2,7 @@ package com.Airways.BAirways.Utility.QueryHelper.DataTypes;
 
 import com.Airways.BAirways.Utility.Exeptions.DataTypeExeption;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -32,8 +33,10 @@ public class DataTypeMapper{
             return new DECIMAL(2, 8);
         }else if(c.equals(LocalDate.class)) {
             return new Date();
-        }else if (c.equals(LocalTime.class)){
+        }else if (c.equals(LocalTime.class)) {
             return new Time();
+        }else if(c.equals(File.class)){
+            return new BLOB();
         }else{
             throw new DataTypeExeption("Invalid data type conversion");
         }

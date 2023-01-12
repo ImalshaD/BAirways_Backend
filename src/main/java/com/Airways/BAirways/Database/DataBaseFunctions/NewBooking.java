@@ -1,71 +1,73 @@
 package com.Airways.BAirways.Database.DataBaseFunctions;
 
 public class NewBooking extends DataBaseFunction{
-    private int seatID;
-    private int tripID;
+    private int bookingID;
     private int passengerID;
     private int userId;
     private String refNum;
     private String refKeu;
 
-    protected static final String functionCall="CALL %s('%s', '%s', '%s', '%s', '%s', '%s');";
+    protected static final String functionCall="CALL %s('%s', '%s', '%s', '%s', '%s');";
 
     protected static final String funcName="new_booking";
     protected static final Type funcType=Type.PROCEDURE;
 
     private static final String createQuery= """ 
-            CREATE %s %s(
-                   IN seatId INT,
-                   IN tripId INT,
-                   IN passengerId INT,
-                   IN userId INT,
-                   IN referenceNumber VARCHAR(100),
-                   IN refkey VARCHAR(100)
-                 )
-                 BEGIN
-                   declare bookingID int default 0;
-                   declare passengerIdCheck int default null;
-                   START TRANSACTION ;
-                 		select booking_id into bookingID from booking WHERE  seat_id= seatId AND  trip_id= tripId;
-                 	  SELECT passenger_id INTO passengerIdCheck
-                 	  FROM booking
-                 	  WHERE seat_id = seatId AND trip_id= tripId;
-                 	  IF passengerIdCheck IS NULL THEN
-                 		UPDATE booking
-                 		SET booking_id = passengerId
-                 		WHERE seat_id = seatId AND trip_id = tripId;
-                 		INSERT INTO booking_log (booking_id, user_id)
-                 		VALUES (bookingID, userId);
-                 		INSERT INTO reference_log (booking_id, reference_num, referenceKey)
-                 		VALUES (booking_id, referenceNumber, refkey);
-                         select 1 as response;
-                 		COMMIT;
-                 	  ELSE
-                 		select 0 as response;
-                 		ROLLBACK;
-                   END IF;
+            CREATE PROCEDURE %s(
+                IN passenger_id_get int,
+                 IN booking_id_get int,
+                 IN user_id_get int,
+                 IN ref_num VARCHAR(100),
+                 IN ref_key VARCHAR(100)
+             )
+             BEGIN
+                DECLARE passenger_id_use INT default null;
+                DECLARE status_id_pen INT DEFAULT 0;
+                DECLARE status_id_app INT DEFAULT 0;
+                DECLARE count_res INT DEFAULT 0;
+                START TRANSACTION;
+                    UPDATE booking set passenger_id = passenger_id_get where booking_id=booking_id_get
+                     AND passenger_id is null;
+                     select passenger_id into passenger_id_use from  booking where booking_id = booking_id_get;
+                     if !(passenger_id_use=passenger_id_get) then
+                        select 0 as response;
+                         rollback;
+                    else
+                         select status_id into status_id_pen from status where name='PENDING';
+                         select status_id into status_id_app from status where name='CANCELLED';
+                         select count(*) into count_res from booking_log where booking_id = booking_id_get and status_id != status_id_app;
+                         IF (count_res>0) then
+                            select 0 as response;
+                            rollback;
+                         ELSE
+                             INSERT INTO booking_log(user_id,booking_id,status_id) values(user_id_get,booking_id_get,status_id_pen);
+                             INSERT INTO reference_log(booking_id,referenceKey,reference_num) values(booking_id_get,ref_num,ref_key);
+                             select 1 as response;
+                             COMMIT;
+                         END IF;
+                    END IF;
                 
-                 END;
+             END;
             """;
 
     public NewBooking() {
         super(funcName, funcType);
     }
-    public void setparams(int seatID,int tripID,int passengerID,int userId,String refNum,String refKeu){
+    public void setparams(int passengerID,int bookingID,int userId,String refNum,String refKeu){
         this.passengerID=passengerID;
         this.refNum=refNum;
         this.refKeu=refKeu;
-        this.seatID=seatID;
+        this.bookingID=bookingID;
         this.userId=userId;
-        this.tripID=tripID;
+
     }
     @Override
     public String getCreateQuery() {
-        return String.format(createQuery,funcType,funcName);
+        return String.format(createQuery,funcName);
     }
 
     @Override
     protected String getQuery() {
-        return String.format(functionCall,funcName,seatID,tripID,passengerID,userId,refKeu,refKeu);
+        return String.format(functionCall,funcName,passengerID,bookingID,userId,refNum,refKeu);
     }
 }

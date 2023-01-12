@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,11 +21,13 @@ public class Reference_log {
     private String referenceKey;
     @MyColoumn @MyPrimaryKey
     private String reference_num;
+    @MyColoumn
+    private File ticket;
     protected static final String BOOKINGID="booking_id";
     protected static final String REFERENCEKEY="referenceKey";
     protected static final String REFERENCENUM="reference_num";
     protected static final String tableName="Reference_log";
-
+    protected static final String TICKET = "ticket";
     public static String bookingid(){
         return BOOKINGID;
     }
@@ -41,6 +45,10 @@ public class Reference_log {
 
     public static String tablename(){
         return tableName;
+    }
+
+    public static String ticket(){
+        return TICKET;
     }
 
 }

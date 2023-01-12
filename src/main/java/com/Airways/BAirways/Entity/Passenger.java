@@ -1,6 +1,7 @@
 package com.Airways.BAirways.Entity;
 
 import com.Airways.BAirways.Utility.Annotations.MyColoumn;
+import com.Airways.BAirways.Utility.Annotations.MyForiegnKey;
 import com.Airways.BAirways.Utility.Annotations.MyPrimaryKey;
 import com.Airways.BAirways.Utility.Annotations.MyTable;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,10 @@ import java.time.LocalDate;
 public class Passenger {
     @MyColoumn @MyPrimaryKey(autoIncrement = true)
     private int passenger_id;
-    @MyColoumn
-    private String passport_number;
     @MyColoumn(unique = true)
-    private String nationality;
+    private String passport_number;
+    @MyColoumn @MyForiegnKey(table = Country.class,coloumn = Country.COUNTRYID)
+    private int nationality;
     @MyColoumn
     private String first_name;
     @MyColoumn
@@ -30,6 +31,14 @@ public class Passenger {
     private String contact_number;
     @MyColoumn
     private LocalDate b_day;
+    @MyColoumn
+    private int age;
+    @MyColoumn
+    private String address_line1;
+    @MyColoumn
+    private String address_line2;
+    @MyColoumn
+    private String address_line3;
 
     protected static final String PASSENGERID="passenger_id";
     protected static final String PASSPORTNUMBER="passport_number";
@@ -39,8 +48,21 @@ public class Passenger {
     protected static final String EMAIL="email";
     protected static final String CONTACTNUMBER="contact_number";
     protected static final String BDAY="b_day";
+    protected static final String AGE ="age";
+    protected static final String ADDRESSLINE1="address_line1";
+    protected static final String ADDRESSLINE2="address_line2";
+    protected static final String ADDRESSLINE3="address_line3";
     protected static final String tableName="Passenger";
 
+    public static String addressline1(){
+        return ADDRESSLINE1;
+    }
+    public static String addressline2(){
+        return ADDRESSLINE2;
+    }
+    public static String addressline3(){
+        return ADDRESSLINE3;
+    }
     public static String passengerid(){
         return PASSENGERID;
     }
@@ -83,6 +105,10 @@ public class Passenger {
 
     public static String tablename(){
         return tableName;
+    }
+
+    public static String age(){
+        return AGE;
     }
 
 }

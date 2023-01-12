@@ -1,13 +1,12 @@
 package com.Airways.BAirways.Service;
 
-import com.Airways.BAirways.DTO.BookingDTO;
-import com.Airways.BAirways.DTO.Booking_logDTO;
-import com.Airways.BAirways.DTO.PassengerDTO;
-import com.Airways.BAirways.DTO.RegisteredUserDTO;
+import com.Airways.BAirways.DTO.*;
 import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Booking;
 import com.Airways.BAirways.Repositary.BookingRepo;
+import com.Airways.BAirways.Utility.Exeptions.DuplicateExeption;
+import com.Airways.BAirways.Utility.Exeptions.NotExistenceExeption;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
 import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.JoinOperators;
@@ -61,25 +60,46 @@ public class BookingService {
         return maps;
     }
 
-    public int makeBooking(int user_id, PassengerDTO dto,int trip_id,int seat_id){
+    public int makeBooking(int user_id, PassengerDTO dto,int booking_id,int seat_id,int trip_id){
         int passengerId = passengerService.getPassengerIDifNotCreate(dto);
         String refNum = String.format(refNumformat,trip_id,seat_id,passengerId,user_id);
         String key = "key"+user_id;
-        newBooking.setparams(seat_id,trip_id,passengerId,user_id,refNum,key);
+        newBooking.setparams(passengerId,booking_id,user_id,refNum,key);
         return newBooking.call();
     }
-    public Map<Object,Object> newBooking(List<PassengerDTO> listdto ,int tripId){
+    public Map<Object,Object> newBooking(List<PassengerDTO> listdto ,int trip_id) throws DuplicateExeption, NotExistenceExeption, NoSuchFieldException, IllegalAccessException {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         RegisteredUserDTO dto = registeredUserService.getUserByuserName(username);
         Map<Object,Object> mapobj = new HashMap<>();
+        System.out.println(listdto.toString());
         for (PassengerDTO passengerDTO : listdto){
-            int temp=makeBooking(dto.getUser_id(),passengerDTO, tripId, passengerDTO.getSeat_id());
+            System.out.println("11");
+            BookingDTO bookingDTO = getBySeatIDTripID(passengerDTO.getSeat_id(),trip_id);
+            System.out.println(bookingDTO.getBooking_id());
+            int temp=makeBooking(dto.getUser_id(),passengerDTO,bookingDTO.getBooking_id(),passengerDTO.getSeat_id(),trip_id);
+            System.out.println(temp);
             mapobj.put(passengerDTO.getSeat_id(),temp);
         }
         return mapobj;
     }
     public BookingDTO getByID(int bookingID){
         return bookingRepo.getByBookingId(bookingID);
+    }
+
+    public BookingDTO getBySeatIDTripID(int seat_id,int trip_id) throws NoSuchFieldException, IllegalAccessException, DuplicateExeption, NotExistenceExeption {
+        SelectQueryPreparedStatementGenerator selectQuey = new SelectQueryPreparedStatementGenerator();
+        selectQuey.setTableName(Booking.tablename());
+        selectQuey.firstCondition(Booking.tripid(),Operators.EQUAL,trip_id);
+        selectQuey.joinCondition(JoinOperators.AND,Booking.seatid(),Operators.EQUAL,seat_id);
+        List<Map<String,Object>> maps= jdbcTemplate.queryForList(selectQuey.getQuery(),selectQuey.getArguments());
+        BookingDTO bookingDTO  = new BookingDTO();
+        if (maps.size()>1){
+            throw  new DuplicateExeption("DUPLICATE SEATID TRIPID IN booking table");
+        } else if (maps.size() == 0) {
+            throw new NotExistenceExeption("SEATID TRIPID doesn't exists in booking table");
+        }
+        DTOMapper<BookingDTO> dtoMapper = new DTOMapper();
+        return dtoMapper.maptoDTO(bookingDTO,maps.get(0));
     }
     public List<BookingDTO> getBookingforCurrentUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

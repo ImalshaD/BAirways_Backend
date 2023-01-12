@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .defaultSuccessUrl("/home",true)
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).clearAuthentication(true).deleteCookies()
                 .and().build();
 //        return http.authorizeHttpRequests().anyRequest().authenticated().and().build();
     }

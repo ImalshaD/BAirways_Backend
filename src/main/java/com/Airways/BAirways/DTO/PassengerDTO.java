@@ -14,7 +14,7 @@ public class PassengerDTO {
 
     private String passport_number;
 
-    private String nationality;
+    private int nationality;
 
     private String first_name;
 
@@ -24,6 +24,12 @@ public class PassengerDTO {
 
     private String contact_number;
 
+    private String address_line1;
+
+    private String address_line2;
+
+    private String address_line3;
     private LocalDate b_day;
     private int seat_id;
+    private int age;
 }

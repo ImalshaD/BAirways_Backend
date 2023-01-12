@@ -6,6 +6,8 @@ import com.Airways.BAirways.DTO.PassengerDTO;
 import com.Airways.BAirways.Entity.Passenger;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.Operators;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +73,11 @@ public class PassengerRepo extends Repo<PassengerDTO> {
 
     @Override
     public int insertRecord(PassengerDTO dto) {
-
-
+        LocalDate today = LocalDate.now();
+        if (today.isBefore(dto.getB_day())){
+            return 0;
+        }
+        int age = Period.between(dto.getB_day(),today).getYears();
         prepareInsert();
 
         insertQuery.addValue(Passenger.passportnumber(),dto.getPassport_number());
@@ -82,6 +87,10 @@ public class PassengerRepo extends Repo<PassengerDTO> {
         insertQuery.addValue(Passenger.email(),dto.getEmail());
         insertQuery.addValue(Passenger.contactnumber(),dto.getContact_number());
         insertQuery.addValue(Passenger.bday(),dto.getB_day());
+        insertQuery.addValue(Passenger.addressline1(),dto.getAddress_line1());
+        insertQuery.addValue(Passenger.addressline2(),dto.getAddress_line2());
+        insertQuery.addValue(Passenger.addressline3(),dto.getAddress_line3());
+        insertQuery.addValue(Passenger.age(),age);
         return insert();
 
 
@@ -99,7 +108,7 @@ public class PassengerRepo extends Repo<PassengerDTO> {
         }
 
 
-        if (dtoOld.getNationality()!=null && dtoNew.getNationality()!=null){
+        if (dtoOld.getNationality()!=0 && dtoNew.getNationality()!=0){
             if (dtoOld.getNationality()!=dtoNew.getNationality()){
                 updateQuery.setField(Passenger.nationality(),dtoNew.getNationality());
             }

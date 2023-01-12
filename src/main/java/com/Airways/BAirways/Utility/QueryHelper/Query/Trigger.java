@@ -6,6 +6,7 @@ import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
 import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.QueryHelper.IntegerRowMapper;
+import com.Airways.BAirways.Utility.QueryHelper.Operators.Operators;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public class Trigger {
             }catch (Exception e){
                 logger.log(e.toString());
                 return 0;
+
             }
         }
     }
