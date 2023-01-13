@@ -41,6 +41,11 @@ public class Booking_logRepo extends Repo<Booking_logDTO> {
         selectQuery.firstCondition(Booking_log.lognum(), Operators.EQUAL,logNum);
         return exists();
     }
+    public boolean existsByBookingID(int id){
+        prepare();
+        selectQuery.firstCondition(Booking_log.bookingid(), Operators.EQUAL,id);
+        return exists();
+    }
     @Override
     public boolean existsByPrimaryKey(Booking_logDTO dto) {
         return existsByLogNum(dto.getLog_num());

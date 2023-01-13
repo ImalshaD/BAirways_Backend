@@ -39,7 +39,7 @@ public class BookingRepo extends Repo<BookingDTO> {
 
     public boolean existsByBookingId(int bookingId){
         prepare();
-        selectQuery.joinCondition(JoinOperators.AND,Booking.bookingid(), Operators.EQUAL,bookingId);
+        selectQuery.firstCondition(Booking.bookingid(), Operators.EQUAL,bookingId);
         return exists();
     }
     @Override

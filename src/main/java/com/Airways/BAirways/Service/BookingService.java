@@ -1,9 +1,11 @@
 package com.Airways.BAirways.Service;
 
 import com.Airways.BAirways.DTO.*;
+import com.Airways.BAirways.Database.DataBaseFunctions.CancelBooking;
 import com.Airways.BAirways.Database.DataBaseFunctions.NewBooking;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Booking;
+import com.Airways.BAirways.Entity.Booking_log;
 import com.Airways.BAirways.Repositary.BookingRepo;
 import com.Airways.BAirways.Utility.Exeptions.DuplicateExeption;
 import com.Airways.BAirways.Utility.Exeptions.NotExistenceExeption;
@@ -101,14 +103,35 @@ public class BookingService {
         DTOMapper<BookingDTO> dtoMapper = new DTOMapper();
         return dtoMapper.maptoDTO(bookingDTO,maps.get(0));
     }
-    public List<BookingDTO> getBookingforCurrentUser(){
+    public List<BookingTransferDTO> getBookingforCurrentUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         RegisteredUserDTO currentUser = registeredUserService.getUserByuserName(username);
         List<Booking_logDTO> bookingLogs = booking_logService.getByUser(currentUser.getUser_id());
-        List<BookingDTO> returnList = new ArrayList<>();
+        List<BookingTransferDTO> returnList = new ArrayList<>();
         for (Booking_logDTO dto : bookingLogs){
-            returnList.add(getByID(dto.getBooking_id()));
+            returnList.add(new BookingTransferDTO(getByID(dto.getBooking_id()), dto.getStatus_id()));
         }
         return returnList;
+    }
+
+    public int cancelBooking(int booking_id){
+        CancelBooking cancelBooking = new CancelBooking();
+        cancelBooking.setParams(booking_id);
+        return cancelBooking.call();
+    }
+
+    public BookingTransferDTO getTicket(int booking_id) throws NoSuchFieldException, IllegalAccessException {
+        SelectQueryPreparedStatementGenerator selectQuery = new SelectQueryPreparedStatementGenerator();
+        selectQuery.setTableName(Booking_log.tablename());
+        selectQuery.firstCondition(Booking_log.bookingid(),Operators.EQUAL,booking_id);
+        selectQuery.joinCondition(JoinOperators.AND,Booking_log.statusid(),Operators.NOTEQUAL,3);
+        List<Map<String,Object>>  maps = jdbcTemplate.queryForList(selectQuery.getQuery(),selectQuery.getArguments());
+        DTOMapper<Booking_logDTO> mapper = new DTOMapper<>();
+        Booking_logDTO temp = new Booking_logDTO();
+        if (maps.size()==0){
+            return null;
+        }
+        Booking_logDTO booking_logDTO = mapper.maptoDTO(temp,maps.get(0));
+        return  new BookingTransferDTO(getByID(booking_id),booking_logDTO.getStatus_id());
     }
 }

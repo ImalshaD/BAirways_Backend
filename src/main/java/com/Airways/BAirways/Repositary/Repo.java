@@ -2,6 +2,8 @@ package com.Airways.BAirways.Repositary;
 
 
 import com.Airways.BAirways.Database.Template;
+import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
+import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.QueryHelper.PreparedStatement.DeleteQueryPreparedStatementGenerator;
 import com.Airways.BAirways.Utility.QueryHelper.PreparedStatement.InsertQueryPreparedStatementGenerator;
 import com.Airways.BAirways.Utility.QueryHelper.PreparedStatement.SelectQueryPreparedStatementGenerator;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 public abstract class Repo<T> {
 
+    private static AbstractLogger logger  = LoggerBuilder.getLogger();
 
     private static final Template template = new Template();
     protected InsertQueryPreparedStatementGenerator insertQuery;

@@ -23,4 +23,8 @@ public class PassengerService {
             return addNewPassenger(dto).getPassenger_id();
         }
     }
+
+    public PassengerDTO getByID(int id){
+        return passengerRepo.getByPassengerId(id);
+    }
 }

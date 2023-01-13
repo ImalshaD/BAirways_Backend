@@ -184,6 +184,7 @@ public class TestController {
         ArrayList<ForeignKeyQuery> foreignKey = Initializer.getForeignkeyQueries();
         ArrayList<IndexQuery> indexes = Initializer.getIndexQueries();
         ArrayList<Trigger> triggers = Initializer.getTriggers();
+        ArrayList<Event> events = Initializer.getEvents();
         CreateIndexIfNotExists createIndexIfNotExists = new CreateIndexIfNotExists();
         CreateForeignKeyIfNotExists createForeignKeyIfNotExists = new CreateForeignKeyIfNotExists();
         CreateTriggerIfNotExists createTriggerIfNotExists = new CreateTriggerIfNotExists();
@@ -210,6 +211,10 @@ public class TestController {
             int y = t.create();
             System.out.println(t.getTrigger()+" "+y);
         }
+        for (Event t : events){
+            int y = t.create();
+            System.out.println(t.getQuery()+" "+y);
+        }
         RegisteredUserRepo registeredUserRepo = new RegisteredUserRepo();
         RegisteredUserDTO registeredUserDTO  = new RegisteredUserDTO();
         TripStatusRepo tripStatusRepo = new TripStatusRepo();
@@ -220,7 +225,7 @@ public class TestController {
         String passengerClasses[]={"PLATINUM",""};
         double discounts[] = {0.0,0.0,9.0,15.0,0.0};
         String tripstatus[] = {"SCHEDULED","DEPARTURED","LANDED"};
-        String status[] = {"PENDING","PAID","CANCELLED"};
+        String status[] = {"PENDING","PAID","CANCELLED","COMPLETED"};
         ArrayList<Integer> userids = new ArrayList<>();
         for (int i=0;i<usertypes.length;i++) {
             String type = usertypes[i];

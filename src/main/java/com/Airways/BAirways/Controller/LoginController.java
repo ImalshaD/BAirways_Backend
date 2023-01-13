@@ -14,4 +14,9 @@ public class LoginController {
     public String home(){
         return "home";
     }
+
+    @GetMapping(path="/mybooking")
+    public String userbooking(){
+        return "userBookings";
+    }
 }

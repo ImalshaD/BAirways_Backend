@@ -17,6 +17,7 @@ public class Initializer {
     private static CreateQueryGenerator createQueryGenerator = new CreateQueryGeneratorTypeII();
     private static ArrayList<String> createQueries = new ArrayList<String>();
     private static ArrayList<Trigger> triggers = new ArrayList<Trigger>();
+    private static ArrayList<Event> events = new ArrayList<>();
     private static ArrayList<ForeignKeyQuery> foreignkeyQueries = new ArrayList<ForeignKeyQuery>();
     private static ArrayList<IndexQuery> indexQueries = new ArrayList<IndexQuery>();
     public static void build() throws DataTypeExeption, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -29,9 +30,11 @@ public class Initializer {
         if (isBuild){
             isBuild=false;
             createQueryGenerator.reset();
-            ArrayList<String> createQueries = new ArrayList<String>();
-            ArrayList<ForeignKeyQuery> foreignkeyQueries = new ArrayList<ForeignKeyQuery>();
-            ArrayList<IndexQuery> indexQueries = new ArrayList<IndexQuery>();
+            createQueries = new ArrayList<String>();
+            foreignkeyQueries = new ArrayList<ForeignKeyQuery>();
+            indexQueries = new ArrayList<IndexQuery>();
+            triggers = new ArrayList<Trigger>();
+            events = new ArrayList<Event>();
             buildDB();
         }
     }
@@ -67,6 +70,9 @@ public class Initializer {
                 if (method.isAnnotationPresent(MyTrigger.class)){
                     Object result=method.invoke(null);
                     triggers.add((Trigger) result);
+                } else if (method.isAnnotationPresent(MyEvent.class)) {
+                    Object result=method.invoke(null);
+                    events.add((Event) result);
                 }
             }
             createQueries.add(createQueryGenerator.getQuery());
@@ -90,4 +96,5 @@ public class Initializer {
     public static ArrayList<Trigger> getTriggers() {
         return triggers;
     }
+    public static ArrayList<Event> getEvents() { return  events;}
 }

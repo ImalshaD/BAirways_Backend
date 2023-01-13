@@ -1,9 +1,6 @@
 package com.Airways.BAirways.Controller;
 
-import com.Airways.BAirways.DTO.BookingDTO;
-import com.Airways.BAirways.DTO.BookingRequestDTO;
-import com.Airways.BAirways.DTO.PassengerDTO;
-import com.Airways.BAirways.DTO.ResponseDTO;
+import com.Airways.BAirways.DTO.*;
 import com.Airways.BAirways.Service.BookingService;
 import com.Airways.BAirways.Service.Booking_LogService;
 import com.Airways.BAirways.Service.RegisteredUserService;
@@ -40,7 +37,7 @@ public class BookingController {
     }
     @GetMapping(path="/getBookings")
     public ResponseDTO getBookings(){
-        List<BookingDTO> returnList = bookingService.getBookingforCurrentUser();
+        List<BookingTransferDTO> returnList = bookingService.getBookingforCurrentUser();
         return new ResponseDTO(QueryStatus.SUCCESS.toString(),"List of bookings",returnList);
     }
 
@@ -49,5 +46,44 @@ public class BookingController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("booking");
         return modelAndView;
+    }
+
+    @PostMapping(path="/cancelbooking/{id}")
+    public ResponseDTO cancelBooking(@PathVariable int id){
+        int res = bookingService.cancelBooking(id);
+        if (res == 0){
+            return new ResponseDTO(QueryStatus.FAILED.toString(),"Failed Cancelling booking",null);
+        }else{
+            return new ResponseDTO(QueryStatus.SUCCESS.toString(),"Cancelled booking",id);
+        }
+    }
+
+    @GetMapping(path="/getTicket/{id}")
+    public ResponseDTO getTicket(@PathVariable int id){
+        try {
+            BookingTransferDTO res = bookingService.getTicket(id);
+            if (res==null){
+                return new ResponseDTO(QueryStatus.FAILED.toString(),"No such booking",null);
+            }
+            if (res.getStatus()==1){
+                return new ResponseDTO(QueryStatus.FAILED.toString(),"Payment pending",null);
+            }
+            if (res.getStatus()==4){
+                return  new ResponseDTO(QueryStatus.FAILED.toString(),"Completed booking",null);
+            }
+            if (res.getStatus()==3){
+                return  new ResponseDTO(QueryStatus.FAILED.toString(),"Cancelled booking",null);
+            }
+            return new ResponseDTO(QueryStatus.SUCCESS.toString(),"Ticket",res);
+        }catch (Exception e){
+            return  new ResponseDTO(QueryStatus.FAILED.toString(),"Failed",null);
+        }
+
+    }
+    @GetMapping(path="/ticket")
+    public ModelAndView ticketView(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ticket.html");
+        return  modelAndView;
     }
 }

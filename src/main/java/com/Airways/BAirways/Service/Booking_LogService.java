@@ -1,9 +1,11 @@
 package com.Airways.BAirways.Service;
 
+import com.Airways.BAirways.DTO.BookingDTO;
 import com.Airways.BAirways.DTO.Booking_logDTO;
 import com.Airways.BAirways.DTO.DTOMapper;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Booking_log;
+import com.Airways.BAirways.Repositary.Booking_logRepo;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
 import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.QueryHelper.Operators.Operators;
@@ -20,6 +22,8 @@ public class Booking_LogService {
     private static Template template = new Template();
     private static AbstractLogger logger = LoggerBuilder.getLogger();
     private static JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
+
+    private static Booking_logRepo booking_logRepo = new Booking_logRepo();
     public List<Booking_logDTO> getByUser(int user_id){
         SelectQueryPreparedStatementGenerator selectQuery = new SelectQueryPreparedStatementGenerator();
         selectQuery.setTableName(Booking_log.tablename());
@@ -37,4 +41,5 @@ public class Booking_LogService {
         }
         return returnList;
     }
+
 }

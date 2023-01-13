@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .and().authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
                 .and().authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/registerdUser/saveUser")).permitAll()
                 .and().authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/trip/**")).permitAll()
+                .and().authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

@@ -4,6 +4,7 @@ import com.Airways.BAirways.DTO.DTOMapper;
 import com.Airways.BAirways.DTO.RouteDTO;
 import com.Airways.BAirways.Database.Template;
 import com.Airways.BAirways.Entity.Route;
+import com.Airways.BAirways.Repositary.RouteRepo;
 import com.Airways.BAirways.Utility.MyLogger.AbstractLogger;
 import com.Airways.BAirways.Utility.MyLogger.LoggerBuilder;
 import com.Airways.BAirways.Utility.MyLogger.PrintLogger;
@@ -21,6 +22,11 @@ public class RouteService {
     private Template template = new Template();
     private JdbcTemplate jdbcTemplate = template.getJdbcTemplate();
     private AbstractLogger logger = LoggerBuilder.getLogger();
+    private RouteRepo routeRepo = new RouteRepo();
+
+    public RouteDTO getByRouteID(int id){
+        return  routeRepo.getByRouteId(id);
+    }
 
     public int serchRoute(String from_iata,String to_iata) {
         SelectQueryPreparedStatementGenerator selectQuery = new SelectQueryPreparedStatementGenerator();

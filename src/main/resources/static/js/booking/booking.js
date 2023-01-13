@@ -297,7 +297,7 @@ function proceedClicked() {
       'passport_number' : document.getElementById(`passportNo${i}`).value,
       'nationality' : document.getElementById(`nationality${i}`).value,
       'first_name' : document.getElementById(`firstName${i}`).value,
-      'last_name' : document.getElementById(`firstName${i}`).value,
+      'last_name' : document.getElementById(`lastName${i}`).value,
       'email' : document.getElementById(`email${i}`).value,
       'contact_number' : document.getElementById(`countryCode${i}`).value+document.getElementById(`phoneNo${i}`).value,
       'address_line1' : document.getElementById(`address1${i}`).value,

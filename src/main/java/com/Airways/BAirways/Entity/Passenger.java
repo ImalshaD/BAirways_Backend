@@ -1,14 +1,14 @@
 package com.Airways.BAirways.Entity;
 
-import com.Airways.BAirways.Utility.Annotations.MyColoumn;
-import com.Airways.BAirways.Utility.Annotations.MyForiegnKey;
-import com.Airways.BAirways.Utility.Annotations.MyPrimaryKey;
-import com.Airways.BAirways.Utility.Annotations.MyTable;
+import com.Airways.BAirways.Utility.Annotations.*;
+import com.Airways.BAirways.Utility.QueryHelper.Query.Event;
+import com.Airways.BAirways.Utility.QueryHelper.Query.Trigger;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,6 +53,38 @@ public class Passenger {
     protected static final String ADDRESSLINE2="address_line2";
     protected static final String ADDRESSLINE3="address_line3";
     protected static final String tableName="Passenger";
+
+    @MyEvent
+    public static Event age_update_trigger(){
+        String trigger_name="age_update_trigger";
+        String query= """
+                CREATE EVENT %s
+                    ON SCHEDULE EVERY 1 DAY
+                    STARTS '%s'
+                    DO
+                    BEGIN
+                       DECLARE done INT DEFAULT FALSE;
+                       DECLARE passengerID int;
+                       DECLARE bday date;
+                       DECLARE new_age int;
+                       DECLARE cur CURSOR FOR SELECT passenger_id,b_day FROM passenger;
+                       DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+                    
+                       OPEN cur;
+                       read_loop: LOOP
+                          FETCH cur INTO passengerID,bday;
+                          IF done THEN
+                             LEAVE read_loop;
+                          END IF;
+                    		set new_age = TIMESTAMPDIFF(YEAR, bday, CURDATE());
+                            UPDATE passenger set age=new_age where passenger_id = passengerID;
+                       END LOOP;
+                    
+                       CLOSE cur;
+                    END ;
+                """;
+        return new Event(trigger_name,query);
+    }
 
     public static String addressline1(){
         return ADDRESSLINE1;

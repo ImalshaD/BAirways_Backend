@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/css/ticket/ticket.css" type="text/css" th:href="@{/css/ticket/ticket.css}">
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="ticket basic">
+                <p>Admit One</p>
+            </div>
+        
+            <div class="ticket airline">
+                <div class="top">
+                    <h1>boarding pass</h1>
+                    <div class="big">
+                        <p class="from" id="fromiata">BWI</p>
+                        <p class="to" id="toiata"><i class="fas fa-arrow-right"></i> SAN</p>
+                    </div>
+                    <div class="top--side">
+                        <i class="fas fa-plane"></i>
+                        <p >B Airways</p>
+                        <p>Safe secure flying</p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="column">
+                        <div class="row row-1">
+                            <p id="flighNo"><span>Flight</span>AA2005</p>
+                            <p class="row--right"><span>Gate</span>B3</p>
+                        </div>
+                        <div class="row row-2">
+                            <p id="boards"><span>Boards</span>10:25 AM</p>
+                            <p class="row--center" id="departs"><span>Departs</span>11:00 AM</p>
+                            <p class="row--right" id="arrives"><span>Arrives</span>1:05 PM</p>
+                        </div>
+                        <div class="row row-3">
+                            <p id="passenger"><span>Passenger</span>Jesus Ramirez</p>
+                            <p class="row--center" id="seat"><span>Seat</span>11E</p>
+                            <p class="row--right" id="class"><span>Class</span>3</p>
+                        </div>
+                    </div>
+                    <div class="bar--code"></div>
+                </div>
+            </div>
+        
+            <div class="info">
+                <p>Based on <a href="https://dribbble.com/shots/11399236-Boarding-Pass" target="_blank">this</a> Dribbble from Barna Erdei</p>
+            </div>
+        
+        </div>
+        <script src="../static/js/home/jquery.js" type="text/javascript" th:src="@{/js/home/jquery.js}"></script>
+        <script src="../static/js/ticket/ticket.js" type="text/javascript" th:src="@{/js/ticket/ticket.js}"></script>
+    </body>
+</html>
