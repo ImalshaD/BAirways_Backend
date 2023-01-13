@@ -3,7 +3,7 @@ package com.Airways.BAirways.Database.DataBaseFunctions;
 public class CancelBooking extends DataBaseFunction{
     private static String funcName="cancel_booking";
 
-    private static String functionCall ="CALL %s('%s')";
+    private static String functionCall ="CALL %s('%s');";
     private static Type funcType = Type.PROCEDURE;
 
     private int booking_id;

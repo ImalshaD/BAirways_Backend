@@ -91,6 +91,7 @@ function renderSeats() {
   html += '<div class="seat-container Business">';
   html += '  <div class="class-label">Business Class</div>';
   for (var i = 0; i < businessRows; i++) {
+    console.log("Second_class");
     html += '  <div class="row">';
 
     for (var j = 0; j < businessCols; j++) {

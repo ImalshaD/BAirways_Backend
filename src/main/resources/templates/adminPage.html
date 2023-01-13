@@ -34,12 +34,8 @@
 
 
 
-                    <select class="form-select" aria-label=".form-select-lg example" id="flightNo">
-                        <option selected>Select flight No.</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+
+                    <input class="form-control me-2" type="input" placeholder="Flight ID" id="flightID" aria-label="Search">
 
                     <br>
 
@@ -63,7 +59,7 @@
                     <br>
 
                     <div class="col d-grid gap-2 col-6 mx-auto">
-                        <button type="submit" class="btn btn-danger" id="button1" onclick="button1_Clicked()">Generate</button>
+                        <button type="button" class="btn btn-danger" id="button1" onclick="button1_Clicked()">Generate</button>
                     </div>
 
                 </form>
@@ -79,10 +75,10 @@
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Contact No.</th>
+                            <th scope="col">Age</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="passengerAge">
                         <tr>
                             <td>1</td>
                             <td>1525555</td>
@@ -124,7 +120,12 @@
 
                 <form id="form2">
                     <div class="row">
-
+                        <select class="form-select airport" aria-label="Default select example" id="destination1">
+                            <option selected>Origin</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                         <div class="col-sm-3">
                             <label>Start Date</label>
                             <input type="date" class="form-control" name="startDate" id="startDate1" required>
@@ -137,7 +138,7 @@
                     </div>
                     <br>
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <button type="submit" class="btn btn-danger" id="button2" onclick="button2_Clicked()">Generate</button>
+                        <button type="button" class="btn btn-danger" id="button2" onclick="button2_Clicked()">Generate</button>
                     </div>
                 </form>
 
@@ -150,7 +151,7 @@
                             <th scope="col">No. of Passengers</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="desti">
 
                         <tr>
                             <td>CGK (Indonesia)</td>
@@ -205,7 +206,7 @@
                     </div>
                     <br>
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <button type="submit" class="btn btn-danger" id="button3" onclick="button3_Clicked()">Generate</button>
+                        <button type="button" class="btn btn-danger" id="button3" onclick="button3_Clicked()">Generate</button>
                     </div>
 
                 </form>
@@ -219,7 +220,7 @@
                             <th scope="col">No. of Bookings</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="numberByClass">
                         <tr>
                             <td>Gold</td>
                             <td>152555</td>
@@ -248,7 +249,7 @@
                 <form id="form4">
                     <div class="row align-items-start">
                         <div class="col-sm-2">
-                            <select class="form-select" aria-label="Default select example" id="origin">
+                            <select class="form-select airport" aria-label="Default select example" id="origin">
                                 <option selected>Origin</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -256,7 +257,7 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <select class="form-select" aria-label="Default select example" id="destination">
+                            <select class="form-select airport" aria-label="Default select example" id="destination">
                                 <option selected>Destination.</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -266,7 +267,7 @@
                     </div>
                     <br>
                     <div class="col d-grid gap-2 col-6 mx-auto">
-                        <button type="submit" class="btn btn-danger" id="button4" onclick="button4_Clicked()">Generate</button>
+                        <button type="button" class="btn btn-danger" id="button4" onclick="button4_Clicked()">Generate</button>
                     </div>
                 </form>
 
@@ -275,11 +276,13 @@
                 <table class="table table-striped table-hover" id="table4">
                     <thead>
                         <tr>
-                            <th scope="col">Pending</th>
-                            <th scope="col">Pending</th>
+                            <th scope="col">Trip ID</th>
+                            <th scope="col">Departure</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Passenger Count</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="flightTable">
                         <tr>
                             <td>Pending</td>
                             <td>Pending</td>
@@ -309,7 +312,7 @@
                             <th scope="col">Total Revennue ($)</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="revenueTable">
                         <tr>
                             <td>Boeing 737</td>
                             <td>1525555</td>

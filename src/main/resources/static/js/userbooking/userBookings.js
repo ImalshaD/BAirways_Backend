@@ -32,8 +32,8 @@ function getBookingDetails(){
             if (data.code = "SUCCESS") {
                 for (let bookingDTO of data.context) {
                     bkId.push(bookingDTO.booking_id);
-                    from.push(bookingDTO.from);
-                    to.push(bookingDTO.to);
+                    from.push(bookingDTO.from_iata);
+                    to.push(bookingDTO.to_iata);
                     let date_1 = bookingDTO.schedule;
                     let departure = bookingDTO.departure;
                     let arrival = bookingDTO.arrival;

@@ -1,9 +1,6 @@
 package com.Airways.BAirways.Entity;
 
-import com.Airways.BAirways.Utility.Annotations.MyColoumn;
-import com.Airways.BAirways.Utility.Annotations.MyForiegnKey;
-import com.Airways.BAirways.Utility.Annotations.MyPrimaryKey;
-import com.Airways.BAirways.Utility.Annotations.MyTable;
+import com.Airways.BAirways.Utility.Annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class Route {
     @MyColoumn @MyPrimaryKey(autoIncrement = true)
     private int route_id;
-    @MyColoumn @MyForiegnKey(table = Airport.class,coloumn = Airport.IATACODE)
+    @MyColoumn @MyForiegnKey(table = Airport.class,coloumn = Airport.IATACODE) @MyIndex(indexName = "airport_index")
     private String from_airport;
-    @MyColoumn @MyForiegnKey(table = Airport.class,coloumn = Airport.IATACODE)
+    @MyColoumn @MyForiegnKey(table = Airport.class,coloumn = Airport.IATACODE) @MyIndex(indexName = "airport_index")
     private String to_airport;
 
     protected static final String ROUTEID = "route_id";

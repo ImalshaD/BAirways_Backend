@@ -21,8 +21,7 @@ public class BookingController {
     private RegisteredUserService registeredUserService = new RegisteredUserService();
     @PostMapping(path="/newbooking")
     public ResponseDTO newBooking(@RequestBody BookingRequestDTO reqdto){
-        System.out.println(reqdto.toString());
-        System.out.println(reqdto.getList());
+        System.out.println(reqdto.getList().toString());
         try {
             Map<Object, Object> mapobj = bookingService.newBooking(reqdto.getList(), reqdto.getTrip_id());
             return new ResponseDTO(QueryStatus.SUCCESS.toString(),"Booking logs",mapobj);

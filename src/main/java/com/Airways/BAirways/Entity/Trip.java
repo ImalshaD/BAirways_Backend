@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class Trip {
     @MyColoumn @MyPrimaryKey(autoIncrement = true)
     private int trip_id;
-    @MyColoumn
+    @MyColoumn @MyIndex(indexName = "schedule_index")
     private LocalDate scheduled_date;
     @MyColoumn
     private LocalTime departure;
